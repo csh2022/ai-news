@@ -20,17 +20,14 @@ fi
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Linux环境 - 使用主机网络模式
     DB_HOST="localhost"
-    NETWORK_OPTION="--network=host"
     echo "检测到Linux环境，使用主机网络模式"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # macOS环境 - 使用host.docker.internal
     DB_HOST="host.docker.internal"
-    NETWORK_OPTION=""
     echo "检测到macOS环境，使用host.docker.internal"
 else
     # 其他环境，默认使用host.docker.internal
     DB_HOST="host.docker.internal"
-    NETWORK_OPTION=""
     echo "检测到其他环境，使用默认配置"
 fi
 
@@ -45,11 +42,10 @@ docker rm $CONTAINER_NAME 2>/dev/null || true
 
 # 运行容器
 echo "启动容器..."
-if [ -n "$NETWORK_OPTION" ]; then
+if [ "$OSTYPE" == "linux-gnu"* ]; then
     # 使用网络选项（Linux环境）
     docker run -d \
       --name $CONTAINER_NAME \
-      $NETWORK_OPTION \
       -p 18080:18080 \
       -p 18081:18081 \
       -e DB_HOST=$DB_HOST \
