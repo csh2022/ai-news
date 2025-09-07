@@ -215,6 +215,6 @@ func main() {
 	r.HandleFunc("/api/news", getNews).Methods("GET")
 	r.HandleFunc("/api/news/{id}", getNewsByID).Methods("GET")
 
-	log.Println("Server is running on http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Println("Server is running on http://localhost:18081")
+	log.Fatal(http.ListenAndServe(":18081", r))
 }

@@ -17,19 +17,22 @@ COPY . .
 RUN go build -o main .
 
 # 使用更小的运行时镜像
-FROM alpine:latest
+FROM python:3.11-alpine
 
-# 安装MySQL客户端和必要的运行时依赖
-RUN apk --no-cache add ca-certificates
+# 安装必要的运行时依赖：Go运行环境（不再需要安装Python3）
+RUN apk --no-cache add \
+    ca-certificates
 
 # 设置工作目录
-WORKDIR /root/
+WORKDIR /app
 
-# 从构建阶段复制可执行文件
+# 从构建阶段复制可执行文件和所有源代码
 COPY --from=builder /app/main .
+COPY --from=builder /app/index.html .
+COPY --from=builder /app/server.py .
 
-# 暴露端口
-EXPOSE 8080
+# 暴露端口（Go服务端口和Python服务器端口）
+EXPOSE 18081 18080
 
 # 设置环境变量默认值
 ENV DB_HOST=localhost
@@ -38,5 +41,13 @@ ENV DB_USER=root
 ENV DB_PASSWORD=123456
 ENV DB_NAME=ai_news_db
 
+# 创建启动脚本
+RUN echo '#!/bin/sh' > start.sh && \
+    echo 'echo "启动Go API服务..."' >> start.sh && \
+    echo './main &' >> start.sh && \
+    echo 'echo "启动Python HTTP服务器..."' >> start.sh && \
+    echo 'python3 server.py' >> start.sh && \
+    chmod +x start.sh
+
 # 设置容器启动命令
-CMD ["./main"]
+CMD ["./start.sh"]

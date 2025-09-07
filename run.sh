@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Docker本地测试启动脚本
-set -e
+set -ex
 
 # 设置默认值
 IMAGE_NAME="ai-news-api"
 CONTAINER_NAME="ai-news-container"
-PORT="8080"
+PORT="18080"
 
 # 从环境变量获取数据库密码，如果没有则使用默认值
 if [ -n "$DB_PASSWORD" ]; then
@@ -50,6 +50,8 @@ if [ -n "$NETWORK_OPTION" ]; then
     docker run -d \
       --name $CONTAINER_NAME \
       $NETWORK_OPTION \
+      -p 18080:18080 \
+      -p 18081:18081 \
       -e DB_HOST=$DB_HOST \
       -e DB_PORT=3306 \
       -e DB_USER=root \
@@ -60,7 +62,8 @@ else
     # 不使用网络选项（macOS环境）
     docker run -d \
       --name $CONTAINER_NAME \
-      -p $PORT:8080 \
+      -p 18080:18080 \
+      -p 18081:18081 \
       -e DB_HOST=$DB_HOST \
       -e DB_PORT=3306 \
       -e DB_USER=root \
@@ -72,8 +75,8 @@ fi
 # 显示容器状态
 echo "容器启动成功！"
 echo "容器名称: $CONTAINER_NAME"
-echo "本地访问地址: http://localhost:$PORT"
-echo "API端点: http://localhost:$PORT/api/news"
+echo "前端页面访问地址: http://localhost:18080"
+echo "API端点: http://localhost:18081/api/news"
 
 # 显示日志
 echo "正在显示容器日志..."
