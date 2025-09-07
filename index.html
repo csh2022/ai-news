@@ -89,9 +89,14 @@
         const categories = [...new Set(allNewsData.map(news => news.category))];
         const categoriesContainer = document.getElementById('categories-display');
         
+        const maxVisible = 5;
+        const shouldCollapse = categories.length > maxVisible;
+        const visibleCategories = shouldCollapse ? categories.slice(0, maxVisible) : categories;
+        const hiddenCategories = shouldCollapse ? categories.slice(maxVisible) : [];
+        
         categoriesContainer.innerHTML = `
           <div class="flex flex-wrap gap-3 items-center mb-4">
-            ${categories.map(category => `
+            ${visibleCategories.map(category => `
               <label class="inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
                        onchange="toggleCategory('${category.replace(/'/g, "\\'")}')">
@@ -101,8 +106,57 @@
                 </span>
               </label>
             `).join('')}
+            
+            ${shouldCollapse ? `
+              <div id="hidden-categories" class="hidden flex-wrap gap-3 items-center">
+                ${hiddenCategories.map(category => `
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
+                           onchange="toggleCategory('${category.replace(/'/g, "\\'")}')">
+                    <span class="px-3 py-1 rounded-full text-sm font-medium bg-[#f0f3f5] text-[#607c8a] 
+                           peer-checked:bg-[#007bff] peer-checked:text-white transition-colors duration-200">
+                      ${category}
+                    </span>
+                  </label>
+                `).join('')}
+              </div>
+              
+              <button id="toggle-categories" class="flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 hover:border-blue-300 shadow-sm hover:shadow transition-all duration-200 min-w-[60px]">
+                <span class="toggle-icon">+</span>
+                <span>${hiddenCategories.length} more</span>
+              </button>
+            ` : ''}
           </div>
         `;
+        
+        // 添加折叠/展开功能
+        if (shouldCollapse) {
+          const toggleBtn = document.getElementById('toggle-categories');
+          const hiddenContainer = document.getElementById('hidden-categories');
+          const toggleIcon = toggleBtn.querySelector('.toggle-icon');
+          let isExpanded = false;
+          
+          toggleBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            if (isExpanded) {
+              hiddenContainer.classList.remove('hidden');
+              hiddenContainer.classList.add('flex');
+              toggleBtn.innerHTML = `
+                <span class="toggle-icon">−</span>
+                <span>Show less</span>
+              `;
+              toggleBtn.classList.add('bg-blue-100', 'border-blue-300');
+            } else {
+              hiddenContainer.classList.remove('flex');
+              hiddenContainer.classList.add('hidden');
+              toggleBtn.innerHTML = `
+                <span class="toggle-icon">+</span>
+                <span>${hiddenCategories.length} more</span>
+              `;
+              toggleBtn.classList.remove('bg-blue-100', 'border-blue-300');
+            }
+          });
+        }
       }
 
       let selectedCategories = new Set();
