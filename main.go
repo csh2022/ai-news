@@ -3,8 +3,10 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -28,7 +30,33 @@ var db *sql.DB
 
 func initDB() {
 	var err error
-	db, err = sql.Open("mysql", "root:123456@tcp(localhost:3306)/?charset=utf8mb4&parseTime=true")
+	// 从环境变量获取数据库连接信息
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+
+	// 设置默认值
+	if dbHost == "" {
+		dbHost = "localhost"
+	}
+	if dbPort == "" {
+		dbPort = "3306"
+	}
+	if dbUser == "" {
+		dbUser = "root"
+	}
+	if dbPassword == "" {
+		dbPassword = "123456"
+	}
+	if dbName == "" {
+		dbName = "ai_news_db"
+	}
+
+	// 构建连接字符串
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8mb4&parseTime=true", dbUser, dbPassword, dbHost, dbPort)
+	db, err = sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal("数据库连接失败:", err)
 	}
