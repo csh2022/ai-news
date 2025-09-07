@@ -234,6 +234,15 @@ func createNews(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// 先删除所有现有数据
+	_, err = db.Exec("DELETE FROM news")
+	if err != nil {
+		http.Error(w, "删除现有数据失败", http.StatusInternalServerError)
+		log.Println("删除数据失败:", err)
+		return
+	}
+	log.Println("已删除所有现有新闻数据")
+
 	stmt, err := db.Prepare(`INSERT INTO news (category, title, summary, image, article_link, source, author, published_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
 	if err != nil {
 		http.Error(w, "数据库准备语句失败", http.StatusInternalServerError)
