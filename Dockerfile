@@ -31,7 +31,7 @@ WORKDIR /app
 COPY --from=builder /app/main .
 COPY --from=builder /app/index.html .
 COPY --from=builder /app/server.py .
-COPY --from=builder ads.txt .
+COPY --from=builder /app/ads.txt .
 
 # 复制MySQL初始化脚本
 COPY init-mysql.sql /docker-entrypoint-initdb.d/
