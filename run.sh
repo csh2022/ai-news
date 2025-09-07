@@ -6,30 +6,6 @@ set -ex
 # 设置默认值
 IMAGE_NAME="ai-news-api"
 CONTAINER_NAME="ai-news-container"
-PORT="18080"
-
-# 从环境变量获取数据库密码，如果没有则使用默认值
-if [ -n "$DB_PASSWORD" ]; then
-    echo "使用环境变量中的数据库密码"
-else
-    DB_PASSWORD="123456"
-    echo "使用默认数据库密码"
-fi
-
-# 检测操作系统并设置合适的数据库主机和网络选项
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # Linux环境 - 使用主机网络模式
-    DB_HOST="localhost"
-    echo "检测到Linux环境，使用主机网络模式"
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    # macOS环境 - 使用host.docker.internal
-    DB_HOST="host.docker.internal"
-    echo "检测到macOS环境，使用host.docker.internal"
-else
-    # 其他环境，默认使用host.docker.internal
-    DB_HOST="host.docker.internal"
-    echo "检测到其他环境，使用默认配置"
-fi
 
 # 构建Docker镜像
 echo "构建Docker镜像..."
@@ -42,37 +18,18 @@ docker rm $CONTAINER_NAME 2>/dev/null || true
 
 # 运行容器
 echo "启动容器..."
-if [ "$OSTYPE" == "linux-gnu"* ]; then
-    # 使用网络选项（Linux环境）
-    docker run -d \
-      --name $CONTAINER_NAME \
-      -p 18080:18080 \
-      -p 18081:18081 \
-      -e DB_HOST=$DB_HOST \
-      -e DB_PORT=3306 \
-      -e DB_USER=root \
-      -e DB_PASSWORD=$DB_PASSWORD \
-      -e DB_NAME=ai_news_db \
-      $IMAGE_NAME
-else
-    # 不使用网络选项（macOS环境）
-    docker run -d \
-      --name $CONTAINER_NAME \
-      -p 18080:18080 \
-      -p 18081:18081 \
-      -e DB_HOST=$DB_HOST \
-      -e DB_PORT=3306 \
-      -e DB_USER=root \
-      -e DB_PASSWORD=$DB_PASSWORD \
-      -e DB_NAME=ai_news_db \
-      $IMAGE_NAME
-fi
+docker run -d \
+  --name $CONTAINER_NAME \
+  -p 18080:18080 \
+  -p 18081:18081 \
+  $IMAGE_NAME
 
 # 显示容器状态
 echo "容器启动成功！"
 echo "容器名称: $CONTAINER_NAME"
 echo "前端页面访问地址: http://localhost:18080"
 echo "API端点: http://localhost:18081/api/news"
+echo "MySQL端口: localhost:3306"
 
 # 显示日志
 echo "正在显示容器日志..."
