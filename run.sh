@@ -8,6 +8,14 @@ IMAGE_NAME="ai-news-api"
 CONTAINER_NAME="ai-news-container"
 PORT="8080"
 
+# 从环境变量获取数据库密码，如果没有则使用默认值
+if [ -n "$DB_PASSWORD" ]; then
+    echo "使用环境变量中的数据库密码"
+else
+    DB_PASSWORD="123456"
+    echo "使用默认数据库密码"
+fi
+
 # 检测操作系统并设置合适的数据库主机和网络选项
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Linux环境 - 使用主机网络模式
@@ -45,7 +53,7 @@ if [ -n "$NETWORK_OPTION" ]; then
       -e DB_HOST=$DB_HOST \
       -e DB_PORT=3306 \
       -e DB_USER=root \
-      -e DB_PASSWORD=123456 \
+      -e DB_PASSWORD=$DB_PASSWORD \
       -e DB_NAME=ai_news_db \
       $IMAGE_NAME
 else
@@ -56,7 +64,7 @@ else
       -e DB_HOST=$DB_HOST \
       -e DB_PORT=3306 \
       -e DB_USER=root \
-      -e DB_PASSWORD=123456 \
+      -e DB_PASSWORD=$DB_PASSWORD \
       -e DB_NAME=ai_news_db \
       $IMAGE_NAME
 fi
