@@ -54,8 +54,8 @@ func initDB() {
 		dbName = "ai_news_db"
 	}
 
-	// 构建连接字符串
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8mb4&parseTime=true", dbUser, dbPassword, dbHost, dbPort)
+	// 构建连接字符串（修改这一行）
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=true", dbUser, dbPassword, dbHost, dbPort, dbName)
 	db, err = sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal("数据库连接失败:", err)
@@ -68,10 +68,11 @@ func initDB() {
 	}
 
 	// 使用数据库
-	_, err = db.Exec("USE ai_news_db")
-	if err != nil {
-		log.Fatal("使用数据库失败:", err)
-	}
+	// 删除这两行USE语句（不再需要）
+	// _, err = db.Exec("USE ai_news_db")
+	// if err != nil {
+	//     log.Fatal("使用数据库失败:", err)
+	// }
 
 	// 创建表（如果不存在）
 	createTableSQL := `
