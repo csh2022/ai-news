@@ -155,6 +155,9 @@ func getNews(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
+	// 添加调试打印
+	log.Println("收到GET /api/news请求")
+
 	rows, err := db.Query("SELECT id, category, title, summary, image, article_link, source, author, published_at FROM news ORDER BY created_at DESC")
 	if err != nil {
 		http.Error(w, "数据库查询失败", http.StatusInternalServerError)
@@ -179,6 +182,12 @@ func getNews(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "数据遍历失败", http.StatusInternalServerError)
 		log.Println("数据遍历失败:", err)
 		return
+	}
+
+	// 添加查询结果打印
+	log.Printf("查询到 %d 条新闻数据", len(newsList))
+	for i, news := range newsList {
+		log.Printf("新闻 %d: ID=%d, 标题=%s", i+1, news.ID, news.Title)
 	}
 
 	json.NewEncoder(w).Encode(newsList)
