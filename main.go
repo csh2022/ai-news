@@ -150,6 +150,10 @@ func insertSampleData() {
 func getNews(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	// 添加缓存控制头
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
 
 	rows, err := db.Query("SELECT id, category, title, summary, image, article_link, source, author, published_at FROM news ORDER BY created_at DESC")
 	if err != nil {
