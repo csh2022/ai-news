@@ -76,7 +76,7 @@
       // 获取新闻数据
       async function fetchNews() {
         try {
-          const response = await fetch('http://localhost:18081/api/news');
+          const response = await fetch('https://api-news.102824.com/api/news');
           allNewsData = await response.json();
           renderNews(allNewsData);
           setupSearch(); // 初始化搜索功能
