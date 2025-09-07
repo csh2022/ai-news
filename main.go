@@ -231,12 +231,19 @@ func createNews(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 验证必填字段
+	// 修改字段验证逻辑 - 跳过缺项数据而不是报错
+	var validNewsList []News
 	for i, news := range newsList {
 		if news.Category == "" || news.Title == "" || news.Summary == "" || news.Image == "" || news.ArticleLink == "" {
-			http.Error(w, fmt.Sprintf("Missing required fields in news item %d", i+1), http.StatusBadRequest)
-			return
+			log.Printf("跳过第 %d 条新闻数据，缺少必填字段", i+1)
+			continue // 跳过缺项数据
 		}
+		validNewsList = append(validNewsList, news)
+	}
+
+	if len(validNewsList) == 0 {
+		http.Error(w, "没有有效的新闻数据", http.StatusBadRequest)
+		return
 	}
 
 	// 先删除所有现有数据
@@ -257,12 +264,11 @@ func createNews(w http.ResponseWriter, r *http.Request) {
 	defer stmt.Close()
 
 	var createdNews []News
-	for _, news := range newsList {
+	for _, news := range validNewsList {
 		result, err := stmt.Exec(news.Category, news.Title, news.Summary, news.Image, news.ArticleLink, news.Source, news.Author, news.PublishedAt)
 		if err != nil {
-			http.Error(w, "数据库插入失败", http.StatusInternalServerError)
-			log.Println("插入数据失败:", err)
-			return
+			log.Printf("插入新闻失败: %v，跳过此条数据", err)
+			continue // 跳过插入失败的数据
 		}
 
 		id, _ := result.LastInsertId()
@@ -273,7 +279,7 @@ func createNews(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(createdNews)
-	log.Printf("批量创建完成，共创建 %d 条新闻", len(createdNews))
+	log.Printf("批量创建完成，共创建 %d 条有效新闻", len(createdNews))
 }
 
 func main() {
