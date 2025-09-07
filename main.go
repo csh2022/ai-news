@@ -206,6 +206,62 @@ func getNewsByID(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(news)
 }
 
+func createNews(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	// 处理预检请求
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	var newsList []News
+	err := json.NewDecoder(r.Body).Decode(&newsList)
+	if err != nil {
+		http.Error(w, "Invalid JSON format, expected array of news objects", http.StatusBadRequest)
+		log.Println("JSON解析失败:", err)
+		return
+	}
+
+	// 验证必填字段
+	for i, news := range newsList {
+		if news.Category == "" || news.Title == "" || news.Summary == "" || news.Image == "" || news.ArticleLink == "" {
+			http.Error(w, fmt.Sprintf("Missing required fields in news item %d", i+1), http.StatusBadRequest)
+			return
+		}
+	}
+
+	stmt, err := db.Prepare(`INSERT INTO news (category, title, summary, image, article_link, source, author, published_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
+	if err != nil {
+		http.Error(w, "数据库准备语句失败", http.StatusInternalServerError)
+		log.Println("准备插入语句失败:", err)
+		return
+	}
+	defer stmt.Close()
+
+	var createdNews []News
+	for _, news := range newsList {
+		result, err := stmt.Exec(news.Category, news.Title, news.Summary, news.Image, news.ArticleLink, news.Source, news.Author, news.PublishedAt)
+		if err != nil {
+			http.Error(w, "数据库插入失败", http.StatusInternalServerError)
+			log.Println("插入数据失败:", err)
+			return
+		}
+
+		id, _ := result.LastInsertId()
+		news.ID = int(id)
+		createdNews = append(createdNews, news)
+		log.Printf("新闻创建成功: ID=%d, 标题=%s", id, news.Title)
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(createdNews)
+	log.Printf("批量创建完成，共创建 %d 条新闻", len(createdNews))
+}
+
 func main() {
 	initDB()
 	defer db.Close()
@@ -213,6 +269,7 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/api/news", getNews).Methods("GET")
+	r.HandleFunc("/api/news", createNews).Methods("POST", "OPTIONS")
 	r.HandleFunc("/api/news/{id}", getNewsByID).Methods("GET")
 
 	log.Println("Server is running on http://localhost:18081")
