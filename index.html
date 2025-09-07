@@ -1,22 +1,23 @@
 <html>
   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5929105174129224"
-        crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+          crossorigin="anonymous"></script>
+      <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
   <body>
     <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Newsreader, "Noto Sans", sans-serif;'>
       <div class="layout-container flex h-full grow flex-col">
-        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f3f5] px-10 py-3">
-          <div class="flex items-center gap-8">
-            <div class="flex items-center gap-4 text-[#111618]">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f3f5] px-4 md:px-10 py-3">
+          <div class="flex items-center gap-4 md:gap-8">
+            <div class="flex items-center gap-2 md:gap-4 text-[#111618]">
               <div class="size-4">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
-            <h2 class="text-[#111618] text-lg font-bold leading-tight tracking-[-0.015em]">AI News</h2>
+            <h2 class="text-[#111618] text-base md:text-lg font-bold leading-tight tracking-[-0.015em]">AI News</h2>
           </div>
             <div class="flex items-center gap-9">
               <!-- 删除Home导航链接 -->
@@ -185,12 +186,12 @@
   
         newsData.forEach(news => {
           const newsCard = `
-            <div class="p-6 bg-gray-50 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-              <div class="flex items-stretch justify-between gap-6">
-                <a href="${news.articleLink}" target="_blank" rel="noopener noreferrer" class="flex flex-col gap-3 flex-[4_4_0px] no-underline hover:no-underline">
-                  <p class="text-[#888888] text-sm font-medium leading-normal tracking-wide">${news.category}</p>
-                  <h3 class="text-[#111618] text-xl font-bold leading-tight hover:text-[#007bff] transition-colors duration-200">${news.title}</h3>
-                  <p class="text-[#607c8a] text-base font-normal leading-relaxed hover:text-[#007bff] transition-colors duration-200">${news.summary}</p>
+            <div class="p-4 md:p-6 bg-gray-50 rounded-xl md:rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
+              <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 md:gap-6">
+                <a href="${news.articleLink}" target="_blank" rel="noopener noreferrer" class="flex flex-col gap-2 md:gap-3 flex-[4_4_0px] no-underline hover:no-underline">
+                  <p class="text-[#888888] text-xs md:text-sm font-medium leading-normal tracking-wide">${news.category}</p>
+                  <h3 class="text-[#111618] text-lg md:text-xl font-bold leading-tight hover:text-[#007bff] transition-colors duration-200">${news.title}</h3>
+                  <p class="text-[#607c8a] text-sm md:text-base font-normal leading-relaxed hover:text-[#007bff] transition-colors duration-200">${news.summary}</p>
                   <div class="flex items-center gap-4 text-sm text-[#888888] mt-4 pt-4 border-t border-gray-200">
                     ${news.source ? `<span class="flex items-center gap-1"><span class="text-[#888888]">Source:</span> ${news.source}</span>` : ''}
                     ${news.author ? `<span class="flex items-center gap-1"><span class="text-[#888888]">Author:</span> ${news.author}</span>` : ''}
@@ -198,7 +199,7 @@
                   </div>
                 </a>
                 <div 
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-[1_1_0px] max-w-[180px] shadow-inner border border-gray-200"
+                  class="w-full md:w-auto bg-center bg-no-repeat aspect-video bg-cover rounded-lg md:rounded-xl flex-[1_1_0px] max-w-full md:max-w-[180px] shadow-inner border border-gray-200 mt-4 md:mt-0"
                   style='background-image: url("${news.image}")'
                   onerror="this.style.backgroundImage='url(https://img.freepik.com/free-vector/neural-network-abstract-concept-illustration_335657-3772.jpg)'"
                 ></div>
@@ -214,8 +215,8 @@
     </script>
     
     <!-- 底部版权信息 -->
-    <footer class="mt-16 py-6 bg-gray-50 border-t border-gray-200">
-      <div class="text-center text-[#607c8a] text-sm">
+    <footer class="mt-8 md:mt-16 py-4 md:py-6 bg-gray-50 border-t border-gray-200">
+      <div class="text-center text-[#607c8a] text-xs md:text-sm">
         <p>© 2025 AI News. All rights reserved.</p>
       </div>
     </footer>
