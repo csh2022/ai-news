@@ -70,17 +70,17 @@
             ></div>
           </div>
         </header>
-        <div class="px-40 flex flex-1 justify-center py-5">
+        <div class="px-40 flex flex-1 justify-center py-8">
           <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-            <h1 class="text-[#111618] tracking-light text-[32px] font-bold leading-tight px-4 text-left pb-6 pt-8">Latest AI News</h1>
+            <h1 class="text-[#111618] tracking-light text-[36px] font-bold leading-tight px-4 text-left pb-8 pt-12">Latest AI News</h1>
             
             <!-- 分类显示 -->
-            <div id="categories-display" class="flex flex-wrap gap-3 px-4 pb-6">
+            <div id="categories-display" class="flex flex-wrap gap-4 px-4 pb-8">
             <!-- 分类将通过JavaScript动态生成 -->
             </div>
             
             <!-- 新闻内容容器 -->
-            <div id="news-container">
+            <div id="news-container" class="space-y-6">
             <!-- 新闻内容将通过JavaScript动态生成 -->
             </div>
           </div>
@@ -197,21 +197,26 @@
   
         if (newsData.length === 0) {
           newsContainer.innerHTML = 
-            '<p class="text-center text-[#607c8a] p-8">没有找到相关新闻</p>';
+            '<p class="text-center text-[#607c8a] p-12 text-lg">没有找到相关新闻</p>';
           return;
         }
   
         newsData.forEach(news => {
           const newsCard = `
-            <div class="p-4">
-              <div class="flex items-stretch justify-between gap-4 rounded-xl">
-                <a href="${news.articleLink}" target="_blank" rel="noopener noreferrer" class="flex flex-col gap-1 flex-[3_3_0px] no-underline hover:no-underline">
-                  <p class="text-[#607c8a] text-sm font-normal leading-normal">${news.category}</p>
-                  <h3 class="text-[#111618] text-base font-bold leading-tight hover:text-[#007bff]">${news.title}</h3>
-                  <p class="text-[#607c8a] text-sm font-normal leading-normal">${news.summary}</p>
+            <div class="p-6 bg-gray-50 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
+              <div class="flex items-stretch justify-between gap-6">
+                <a href="${news.articleLink}" target="_blank" rel="noopener noreferrer" class="flex flex-col gap-3 flex-[4_4_0px] no-underline hover:no-underline">
+                  <p class="text-[#888888] text-sm font-medium leading-normal tracking-wide">${news.category}</p>
+                  <h3 class="text-[#111618] text-xl font-bold leading-tight hover:text-[#007bff] transition-colors duration-200">${news.title}</h3>
+                  <p class="text-[#607c8a] text-base font-normal leading-relaxed hover:text-[#007bff] transition-colors duration-200">${news.summary}</p>
+                  <div class="flex items-center gap-4 text-sm text-[#888888] mt-4 pt-4 border-t border-gray-200">
+                    ${news.source ? `<span class="flex items-center gap-1"><span class="text-[#888888]">Source:</span> ${news.source}</span>` : ''}
+                    ${news.author ? `<span class="flex items-center gap-1"><span class="text-[#888888]">Author:</span> ${news.author}</span>` : ''}
+                    ${news.publishedAt ? `<span class="flex items-center gap-1"><span class="text-[#888888]">Published:</span> ${news.publishedAt}</span>` : ''}
+                  </div>
                 </a>
                 <div 
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-[1_1_0px] max-w-[200px]"
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-[1_1_0px] max-w-[180px] shadow-inner border border-gray-200"
                   style='background-image: url("${news.image}")'
                 ></div>
               </div>
