@@ -72,11 +72,16 @@
         </header>
         <div class="px-40 flex flex-1 justify-center py-5">
           <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-            <h1 class="text-[#111618] tracking-light text-[32px] font-bold leading极光tight px-4 text-left pb-3 pt-6">Latest AI News</h1>
+            <h1 class="text-[#111618] tracking-light text-[32px] font-bold leading-tight px-4 text-left pb-6 pt-8">Latest AI News</h1>
+            
+            <!-- 分类显示 -->
+            <div id="categories-display" class="flex flex-wrap gap-3 px-4 pb-6">
+            <!-- 分类将通过JavaScript动态生成 -->
+            </div>
             
             <!-- 新闻内容容器 -->
             <div id="news-container">
-              <!-- 新闻内容将通过JavaScript动态生成 -->
+            <!-- 新闻内容将通过JavaScript动态生成 -->
             </div>
           </div>
         </div>
@@ -93,6 +98,7 @@
           allNewsData = await response.json();
           renderNews(allNewsData);
           setupSearch(); // 初始化搜索功能
+          displayCategories(); // 显示分类
         } catch (error) {
           console.error('获取新闻数据失败:', error);
           document.getElementById('news-container').innerHTML = 
@@ -100,26 +106,74 @@
         }
       }
   
+      // 显示所有分类
+      function displayCategories() {
+        const categories = [...new Set(allNewsData.map(news => news.category))];
+        const categoriesContainer = document.getElementById('categories-display');
+        
+        categoriesContainer.innerHTML = `
+          <div class="flex flex-wrap gap-3 items-center mb-4">
+            ${categories.map(category => `
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
+                       onchange="toggleCategory('${category}')">
+                <span class="px-3 py-1 rounded-full text-sm font-medium bg-[#f0f3f5] text-[#607c8a] 
+                       peer-checked:bg-[#007bff] peer-checked:text-white transition-colors duration-200">
+                  ${category}
+                </span>
+              </label>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      let selectedCategories = new Set();
+      
+      // 切换分类选择
+      function toggleCategory(category) {
+        const checkbox = document.querySelector(`input[value="${category}"]`);
+        
+        if (checkbox.checked) {
+          selectedCategories.add(category);
+        } else {
+          selectedCategories.delete(category);
+        }
+        
+        filterNews();
+      }
+      
+      // 根据选中的分类筛选新闻
+      function filterNews() {
+        const searchInput = document.querySelector('input[placeholder="Search"]');
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        
+        let filteredNews = allNewsData;
+        
+        // 应用分类筛选
+        if (selectedCategories.size > 0) {
+          filteredNews = filteredNews.filter(news => 
+            selectedCategories.has(news.category)
+          );
+        }
+        
+        // 应用搜索筛选
+        if (searchTerm !== '') {
+          filteredNews = filteredNews.filter(news => 
+            news.title.toLowerCase().includes(searchTerm) ||
+            news.category.toLowerCase().includes(searchTerm) ||
+            news.summary.toLowerCase().includes(searchTerm)
+          );
+        }
+        
+        renderNews(filteredNews);
+      }
+
       // 设置搜索功能
       function setupSearch() {
         const searchInput = document.querySelector('input[placeholder="Search"]');
         
         searchInput.addEventListener('input', debounce(function(e) {
-          const searchTerm = e.target.value.trim().toLowerCase();
-          
-          if (searchTerm === '') {
-            renderNews(allNewsData); // 清空搜索，显示所有新闻
-            return;
-          }
-          
-          // 模糊搜索：在标题、类别、摘要中搜索
-          const filteredNews = allNewsData.filter(news => 
-            news.title.toLowerCase().includes(searchTerm) ||
-            news.category.toLowerCase().includes(searchTerm) ||
-            news.summary.toLowerCase().includes(searchTerm)
-          );
-          
-          renderNews(filteredNews);
+          filterNews();
         }, 300));
       }
   
@@ -136,7 +190,7 @@
         };
       }
   
-      // 渲染新闻卡片（保持不变）
+      // 渲染新闻卡片
       function renderNews(newsData) {
         const newsContainer = document.getElementById('news-container');
         newsContainer.innerHTML = '';
@@ -151,13 +205,13 @@
           const newsCard = `
             <div class="p-4">
               <div class="flex items-stretch justify-between gap-4 rounded-xl">
-                <a href="${news.articleLink}" target="_blank" rel="noopener noreferrer" class="flex flex-col gap-1 flex-[2_2_0px] no-underline hover:no-underline">
+                <a href="${news.articleLink}" target="_blank" rel="noopener noreferrer" class="flex flex-col gap-1 flex-[3_3_0px] no-underline hover:no-underline">
                   <p class="text-[#607c8a] text-sm font-normal leading-normal">${news.category}</p>
                   <h3 class="text-[#111618] text-base font-bold leading-tight hover:text-[#007bff]">${news.title}</h3>
                   <p class="text-[#607c8a] text-sm font-normal leading-normal">${news.summary}</p>
                 </a>
                 <div 
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-[1_1_0px] max-w-[200px]"
                   style='background-image: url("${news.image}")'
                 ></div>
               </div>
