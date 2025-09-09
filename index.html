@@ -236,10 +236,10 @@
         newsData.forEach(news => {
           const newsCard = `
             <div class="p-4 md:p-6 bg-gray-50 rounded-xl md:rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-
-              <!-- 整体容器：手机上下排，桌面左右排，并在桌面时图片垂直居中 -->
-              <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
-
+            
+              <!-- 整体容器：手机上下排，桌面左右排，并在桌面时文字和图片等高 -->
+              <div class="flex flex-col md:flex-row md:items-stretch gap-4 md:gap-6">
+              
                 <!-- 左边文字区域 -->
                 <a href="${news.articleLink}" target="_blank" rel="noopener noreferrer" 
                    class="flex flex-col gap-2 md:gap-3 flex-1 no-underline hover:no-underline">
@@ -259,12 +259,12 @@
                   </div>
                 </a>
               
-                <!-- 右边图片区域（桌面端保持垂直居中） -->
+                <!-- 右边图片区域（桌面端保持等高） -->
                 <div class="w-full md:w-[200px] flex-shrink-0 flex justify-center md:justify-end">
                   <img src="${news.image}" 
                        alt="news image" 
                        loading="lazy"
-                       class="w-full h-[140px] object-cover rounded-lg md:rounded-xl shadow-inner border border-gray-200"
+                       class="w-full h-[140px] md:h-full object-cover rounded-lg md:rounded-xl shadow-inner border border-gray-200"
                        onerror="this.onerror=null;this.src='assets/images/default.png';">
                 </div>
               </div>
@@ -273,6 +273,9 @@
           newsContainer.innerHTML += newsCard;
         });
       }
+
+
+
   
       // 页面加载时获取新闻
       document.addEventListener('DOMContentLoaded', fetchNews);
