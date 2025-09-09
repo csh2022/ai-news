@@ -32,6 +32,7 @@ COPY --from=builder /app/main .
 COPY --from=builder /app/index.html .
 COPY --from=builder /app/server.py .
 COPY --from=builder /app/ads.txt .
+COPY --from=builder /app/assets/images ./assets/images
 
 # 复制MySQL初始化脚本
 COPY init-mysql.sql /docker-entrypoint-initdb.d/
