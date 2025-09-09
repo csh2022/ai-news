@@ -222,7 +222,6 @@
         };
       }
 
-      // 渲染新闻卡片
       function renderNews(newsData) {
         const newsContainer = document.getElementById('news-container');
         newsContainer.innerHTML = '';
@@ -236,35 +235,39 @@
         newsData.forEach(news => {
           const newsCard = `
             <div class="p-4 md:p-6 bg-gray-50 rounded-xl md:rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-            
-              <!-- 整体容器：手机上下排，桌面左右排，并在桌面时文字和图片等高 -->
+              <!-- 整体容器：桌面端强制 items-stretch -->
               <div class="flex flex-col md:flex-row md:items-stretch gap-4 md:gap-6">
-              
-                <!-- 左边文字区域 -->
+
+                <!-- 左边文字区域（flex-1 自动撑开高度） -->
                 <a href="${news.articleLink}" target="_blank" rel="noopener noreferrer" 
-                   class="flex flex-col gap-2 md:gap-3 flex-1 no-underline hover:no-underline">
-                  <p class="text-[#888888] text-xs md:text-sm font-medium leading-normal tracking-wide">
-                    ${news.category}
-                  </p>
-                  <h3 class="text-[#111618] text-lg md:text-xl font-bold leading-tight hover:text-[#007bff] transition-colors duration-200">
-                    ${news.title}
-                  </h3>
-                  <p class="text-[#607c8a] text-sm md:text-base font-normal leading-relaxed hover:text-[#007bff] transition-colors duration-200">
-                    ${news.summary}
-                  </p>
-                  <div class="flex flex-col md:flex-row items-start gap-2 md:gap-4 text-xs md:text-sm text-[#888888] mt-3 md:mt-4 pt-3 md:pt-4 border-t border-gray-200">
+                   class="flex flex-col justify-between flex-1 no-underline hover:no-underline">
+                  <div class="flex flex-col gap-2 md:gap-3">
+                    <p class="text-[#888888] text-xs md:text-sm font-medium leading-normal tracking-wide">
+                      ${news.category}
+                    </p>
+                    <h3 class="text-[#111618] text-lg md:text-xl font-bold leading-tight hover:text-[#007bff] transition-colors duration-200">
+                      ${news.title}
+                    </h3>
+                    <p class="text-[#607c8a] text-sm md:text-base font-normal leading-relaxed hover:text-[#007bff] transition-colors duration-200">
+                      ${news.summary}
+                    </p>
+                  </div>
+                
+                  <!-- 底部信息区域，上面加一条分割线 -->
+                  <div class="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-gray-200 
+                              flex flex-col md:flex-row items-start gap-2 md:gap-4 text-xs md:text-sm text-[#888888]">
                     ${news.source ? `<span>Source: ${news.source}</span>` : ''}
                     ${news.author ? `<span>Author: ${news.author}</span>` : ''}
                     ${news.publishedAt ? `<span>Published: ${news.publishedAt}</span>` : ''}
                   </div>
                 </a>
               
-                <!-- 右边图片区域（桌面端保持等高） -->
-                <div class="w-full md:w-[200px] flex-shrink-0 flex justify-center md:justify-end">
+                <!-- 右边图片区域 -->
+                <div class="w-full md:w-[200px] flex-shrink-0 relative overflow-hidden rounded-lg md:rounded-xl border border-gray-200 h-[140px] md:h-auto">
                   <img src="${news.image}" 
                        alt="news image" 
                        loading="lazy"
-                       class="w-full h-[140px] md:h-full object-cover rounded-lg md:rounded-xl shadow-inner border border-gray-200"
+                       class="absolute inset-0 w-full h-full object-cover"
                        onerror="this.onerror=null;this.src='assets/images/default.png';">
                 </div>
               </div>
@@ -274,9 +277,6 @@
         });
       }
 
-
-
-  
       // 页面加载时获取新闻
       document.addEventListener('DOMContentLoaded', fetchNews);
     </script>
