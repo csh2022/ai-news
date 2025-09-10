@@ -103,6 +103,17 @@
     <script
       src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
+    <!-- 自定义样式用于隐藏滚动条 -->
+    <style>
+      .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;  /* Chrome, Safari and Opera */
+      }
+    </style>
+
     <!-- 预加载关键资源 -->
     <link rel="preconnect" href="https://api-news.102824.com">
     <link rel="dns-prefetch" href="https://api-news.102824.com">
@@ -205,39 +216,39 @@
             const categories = [...new Set(allNewsData.map(news => news.category))];
             const categoriesContainer = document.getElementById('categories-display');
             
-            const maxVisible = 5;
+            const maxVisible = 10; // 增加到10个可见标签
             const shouldCollapse = categories.length > maxVisible;
             const visibleCategories = shouldCollapse ? categories.slice(0, maxVisible) : categories;
             const hiddenCategories = shouldCollapse ? categories.slice(maxVisible) : [];
             
             categoriesContainer.innerHTML = `
-                <div class="flex flex-wrap gap-3 items-center mb-4">
+                <div class="flex flex-nowrap items-center gap-2 md:gap-3 mb-4 overflow-x-auto scrollbar-hide">
                     ${visibleCategories.map(category => `
-                        <label class="inline-flex items-center cursor-pointer">
+                        <label class="inline-flex items-center cursor-pointer shrink-0">
                             <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
                                     onchange="toggleCategory('${category.replace(/'/g, "\\'")}')">
                             <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-[#4a5568] 
-                                    peer-checked:bg-[#1a365d] peer-checked:text-white transition-colors duration-200">
+                                    peer-checked:bg-[#1a365d] peer-checked:text-white transition-colors duration-200 whitespace-nowrap">
                                 ${category}
                             </span>
                         </label>
                     `).join('')}
                     
                     ${shouldCollapse ? `
-                        <div id="hidden-categories" class="hidden flex-wrap gap-3 items-center">
+                        <div id="hidden-categories" class="hidden flex-nowrap items-center gap-2 md:gap-3 shrink-0">
                             ${hiddenCategories.map(category => `
-                                <label class="inline-flex items-center cursor-pointer">
+                                <label class="inline-flex items-center cursor-pointer shrink-0">
                                     <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
                                             onchange="toggleCategory('${category.replace(/'/g, "\\'")}')">
                                     <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-[#4a5568] 
-                                            peer-checked:bg-[#1a365d] peer-checked:text-white transition-colors duration-200">
+                                            peer-checked:bg-[#1a365d] peer-checked:text-white transition-colors duration-200 whitespace-nowrap">
                                         ${category}
                                     </span>
                                 </label>
                             `).join('')}
                         </div>
                         
-                        <button id="toggle-categories" class="flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-indigo-50 text-[#1a365d] border border-indigo-100 hover:bg-indigo-100 hover:border-indigo-200 shadow-sm hover:shadow transition-all duration-200 min-w-[60px]" aria-expanded="false" aria-controls="hidden-categories">
+                        <button id="toggle-categories" class="flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-indigo-50 text-[#1a365d] border border-indigo-100 hover:bg-indigo-100 hover:border-indigo-200 shadow-sm hover:shadow transition-all duration-200 min-w-[60px] shrink-0" aria-expanded="false" aria-controls="hidden-categories">
                             <span class="toggle-icon">+</span>
                             <span>${hiddenCategories.length} more</span>
                         </button>
