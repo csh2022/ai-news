@@ -112,6 +112,18 @@
       .scrollbar-hide::-webkit-scrollbar {
         display: none;  /* Chrome, Safari and Opera */
       }
+      
+      /* 标签悬停效果 - 只在未选中的标签上生效 */
+      #categories-display span:not(.selected):hover {
+        background-color: #1a365d;
+        color: white;
+      }
+      
+      /* 选中标签的样式 */
+      #categories-display span.selected {
+        background-color: #1a365d;
+        color: white;
+      }
     </style>
 
     <!-- 预加载关键资源 -->
@@ -124,49 +136,76 @@
       style='font-family: Newsreader, "Noto Sans", sans-serif;'>
       <div class="layout-container flex h-full grow flex-col">
         <header
-          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f3f5] px-4 md:px-10 py-3">
-          <div class="flex items-center gap-4 md:gap-8">
-            <div class="flex items-center gap-2 md:gap-4 text-[#111618]">
-              <div class="size-4">
-                <svg viewBox="0 0 24 24" fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M12 2L极2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12极l10 5 10-5"
-                    stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" />
+          class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm px-4 md:px-10 py-3">
+          <div class="flex items-center justify-between">
+            <!-- Logo and Brand -->
+            <div class="flex items-center gap-3 md:gap-6">
+              <!-- Logo -->
+              <div class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-md">
+                <svg class="w-6 h-6 md:w-7 md:h-7 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <h1
-                class="text-[#111618] text-base md:text-lg font-bold leading-tight tracking-[-0.015em]">AI
-                Insights Daily</h1>
-            </div>
-          </div>
-          <div class="flex flex-1 justify-end gap-4 md:gap-8">
-            <label
-              class="flex flex-col min-w-0 md:min-w-40 !h-8 md:!h-10 max-w-64">
-              <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
-                <div
-                  class="text-[#607c8a] flex border-none bg-[#f0f3f5] items-center justify-center pl-2 md:pl-4 rounded-l-xl border-r-0"
-                  data-icon="MagnifyingGlass"
-                  data-size="20px"
-                  data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px"
-                    height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
-                  </svg>
-                </div>
-                <input
-                  placeholder="Search"
-                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111618] focus:outline-0 focus:ring-0 border-none bg-[#f0f3f5] focus:border-none h-full placeholder:text-[#607c8a] px-2 md:px-4 rounded-l-none border-l-0 pl-1 md:pl-2 text-sm md:text-base font-normal leading-normal"
-                  value
-                  aria-label="Search AI news" />
+              
+              <!-- Brand Name and Tagline -->
+              <div class="flex flex-col">
+                <h1 class="text-[#1a365d] text-xl md:text-2xl font-bold leading-tight tracking-tight">
+                  AI Insights Daily
+                </h1>
+                <p class="text-[#718096] text-xs md:text-sm font-medium leading-none hidden md:block">
+                  Your AI News Companion
+                </p>
               </div>
-            </label>
-            <div
-              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 md:size-10"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBip92LoFl0n-LKIs1KnmI6eeTC_FMG2rJptnsK8cewiKCfLGO2RF4rThSXpvtTJQgAlrddXCnc24bv2DKMcRH-xhjN7TRqu0tojswiONvmU82d-zSbhqzXDMbm4Xizv8Hi9bR70NzZ2AUM5mU3uHC2Qnafc_kqwgDU6tP7OMLS1hpPhtWAVGM3wIjjcE1kQjd-Hq2gFF79gaLwqY8rcNWpnwnXOrPAkZWvpT-J35FQ_z5ClGdnap1nh0o1FtsfzGZNywI68Dkk4ViQ");'
-              aria-label="User profile"></div>
+            </div>
+          
+            <!-- Navigation Menu -->
+            <nav class="hidden md:flex items-center gap-6 lg:gap-8">
+              <a href="/" class="text-[#4a5568] hover:text-[#1a365d] font-medium text-sm transition-colors duration-200">
+                Home
+              </a>
+              <a href="/about.html" class="text-[#4a5568] hover:text-[#1a365d] font-medium text-sm transition-colors duration-200">
+                About
+              </a>
+              <a href="/privacy.html" class="text-[#4a5568] hover:text-[#1a365d] font-medium text-sm transition-colors duration-200">
+                Privacy
+              </a>
+              <a href="/terms.html" class="text-[#4a5568] hover:text-[#1a365d] font-medium text-sm transition-colors duration-200">
+                Terms
+              </a>
+            </nav>
+          
+            <!-- Right Section: Date, Search, Profile -->
+            <div class="flex items-center gap-4 md:gap-6">
+              <!-- Current Date -->
+              <div class="hidden lg:flex flex-col items-end">
+                <span class="text-[#718096] text-xs font-medium">
+                  <span id="current-date"></span>
+                </span>
+                <span class="text-[#4a5568] text-xs">
+                  <span id="current-time"></span>
+                </span>
+              </div>
+          
+              <!-- Search Bar -->
+              <div class="relative">
+                <div class="flex items-center bg-gray-50 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors duration-200">
+                  <div class="pl-3 pr-2 text-gray-500">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <input
+                    placeholder="Search AI news..."
+                    class="w-32 md:w-40 lg:w-48 bg-transparent border-none focus:outline-none focus:ring-0 py-2 pr-3 text-sm text-gray-700 placeholder-gray-500"
+                    aria-label="Search AI news"/>
+                </div>
+              </div>
+          
+              <!-- User Profile -->
+              <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md">
+                <span>AI</span>
+              </div>
+            </div>
           </div>
         </header>
         <div
@@ -219,14 +258,11 @@
             categoriesContainer.innerHTML = `
                 <div class="flex flex-nowrap items-center gap-2 md:gap-3 mb-4 overflow-x-auto scrollbar-hide">
                     ${categories.map(category => `
-                        <label class="inline-flex items-center cursor-pointer shrink-0">
-                            <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
-                                    onchange="toggleCategory('${category.replace(/'/g, "\\'")}')">
-                            <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-[#4a5568] 
-                                    peer-checked:bg-[#1a365d] peer-checked:text-white transition-colors duration-200 whitespace-nowrap">
-                                ${category}
-                            </span>
-                        </label>
+                        <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-[#4a5568] 
+                                whitespace-nowrap cursor-pointer"
+                                onclick="selectSingleCategory('${category.replace(/'/g, "\\'")}')">
+                            ${category}
+                        </span>
                     `).join('')}
                 </div>
             `;
@@ -234,27 +270,50 @@
 
         let selectedCategories = new Set();
         
-        // 切换分类选择
-        function toggleCategory(category) {
-            const checkbox = document.querySelector(`input.category-checkbox[value="${category}"]`);
-            if (checkbox) {
-                checkbox.checked = !checkbox.checked;
-                filterNews();
-            }
-        }
-
         // 选择单个分类
         function selectSingleCategory(category) {
-            // 取消所有其他分类的选择
-            document.querySelectorAll('.category-checkbox').forEach(cb => {
-                cb.checked = cb.value === category;
-            });
+            // 切换选中状态
+            if (selectedCategories.has(category)) {
+                selectedCategories.delete(category);
+            } else {
+                selectedCategories.clear(); // 清除其他选中项，确保只选中一个
+                selectedCategories.add(category);
+            }
+            
+            // 更新标签的视觉状态
+            updateCategoryTagStyles();
+            
+            // 应用筛选
             filterNews();
+        }
+        
+        // 更新分类标签的视觉状态（优化版本，避免闪烁）
+        function updateCategoryTagStyles() {
+            // 获取所有分类标签
+            const categoryTags = document.querySelectorAll('#categories-display span');
+            
+            // 重置所有标签样式
+            categoryTags.forEach(tag => {
+                tag.classList.remove('selected');
+            });
+            
+            // 为选中的标签设置高亮样式
+            if (selectedCategories.size > 0) {
+                selectedCategories.forEach(category => {
+                    const selectedTag = Array.from(categoryTags).find(tag => 
+                        tag.textContent.trim() === category
+                    );
+                    
+                    if (selectedTag) {
+                        selectedTag.classList.add('selected');
+                    }
+                });
+            }
         }
         
         // 根据选中的分类筛选新闻
         function filterNews() {
-            const searchInput = document.querySelector('input[placeholder="Search"]');
+            const searchInput = document.querySelector('input[placeholder="Search AI news..."]');
             const searchTerm = searchInput.value.trim().toLowerCase();
             
             let filteredNews = allNewsData;
@@ -275,12 +334,118 @@
                 );
             }
             
-            renderNews(filteredNews);
+            // 只更新新闻内容，不重新渲染整个页面
+            updateNewsDisplay(filteredNews);
+        }
+        
+        // 更新新闻显示（不重新渲染整个页面）
+        function updateNewsDisplay(newsData) {
+            const newsContainer = document.getElementById('news-container');
+            
+            if (newsData.length === 0) {
+                newsContainer.innerHTML =
+                    '<p class="text-center text-[#607c8a] p-12 text-lg">No relevant news found</p>';
+                return;
+            }
+            
+            // 清除之前的文章结构化数据
+            document.querySelectorAll('script[data-type="news-article"]').forEach(script => script.remove());
+            
+            // 创建新的结构化数据容器
+            const structuredDataContainer = document.createElement('div');
+            structuredDataContainer.id = 'structured-data-container';
+            structuredDataContainer.style.display = 'none';
+            document.body.appendChild(structuredDataContainer);
+        
+            let newsHTML = '';
+            newsData.forEach((news, index) => {
+                // Create structured data for the article
+                const articleStructuredData = {
+                    "@context": "https://schema.org",
+                    "@type": "NewsArticle",
+                    "headline": news.title,
+                    "description": news.summary,
+                    "image": news.image,
+                    "datePublished": news.publishedAt || new Date().toISOString(),
+                    "author": news.author ? {
+                        "@type": "Person",
+                        "name": news.author
+                    } : undefined,
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": news.source || "AI Insights Daily",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://aiinsightsdaily.com/assets/images/logo.png",
+                            "width": "180",
+                            "height": "60"
+                        }
+                    },
+                    "mainEntityOfPage": {
+                        "@type": "WebPage",
+                        "@id": news.articleLink
+                    },
+                    "articleSection": news.category
+                };
+                
+                // 添加结构化数据到页面
+                const script = document.createElement('script');
+                script.type = 'application/ld+json';
+                script.dataset.type = 'news-article';
+                script.textContent = JSON.stringify(articleStructuredData);
+                structuredDataContainer.appendChild(script);
+                
+                // 创建新闻卡片HTML
+                newsHTML += `
+                    <div class="p-4 md:p-6 bg-gray-50 rounded-xl md:rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
+                        <!-- 整体容器：桌面端强制 items-stretch -->
+                        <div class="flex flex-col md:flex-row md:items-stretch gap-4 md:gap-6">
+
+                            <!-- 左边文字区域（flex-1 自动撑开高度） -->
+                            <a href="${news.articleLink}" target="_blank" rel="noopener noreferrer" 
+                            class="flex flex-col justify-between flex-1 no-underline hover:no-underline">
+                                <div class="flex flex-col gap-2 md:gap-3">
+                                    <p class="text-[#888888] text-xs md:text-sm font-medium leading-normal tracking-wide">
+                                        ${news.category}
+                                    </p>
+                                    <h2 class="text-[#111618] text-lg md:text-xl font-bold leading-tight hover:text-[#007bff] transition-colors duration-200">
+                                        ${news.title}
+                                    </h2>
+                                    <p class="text-[#607c8a] text-sm md:text-base font-normal leading-relaxed hover:text-[#007bff] transition-colors duration-200">
+                                        ${news.summary}
+                                    </p>
+                                </div>
+                            
+                                <!-- 底部信息区域，上面加一条分割线 -->
+                                <div class="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-gray-200 
+                                        flex flex-col md:flex-row items-start gap-2 md:gap-4 text-xs md:text-sm text-[#888888]">
+                                    ${news.source ? `<span>Source: ${news.source}</span>` : ''}
+                                    ${news.author ? `<span>Author: ${news.author}</span>` : ''}
+                                    ${news.publishedAt ? `<span>Published: ${news.publishedAt}</span>` : ''}
+                                </div>
+                            </a>
+                        
+                            <!-- 右边图片区域 -->
+                            <div class="w-full md:w-[200px] flex-shrink-0 relative overflow-hidden rounded-lg md:rounded-xl border border-gray-200 h-[140px] md:h-auto">
+                                <img src="${news.image}" 
+                                    alt="${news.title} - AI新闻图片" 
+                                    loading="lazy"
+                                    class="absolute inset-0 w-full h-full object-cover"
+                                    onerror="this.onerror=null;this.src='assets/images/default.png';"
+                                    width="200"
+                                    height="140">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            newsContainer.innerHTML = newsHTML;
         }
 
         // 设置搜索功能
         function setupSearch() {
-            const searchInput = document.querySelector('input[placeholder="Search"]');
+            const searchInput = document.querySelector('input[placeholder="Search AI news..."]');
             
             searchInput.addEventListener('input', debounce(function(e) {
                 filterNews();
@@ -404,7 +569,31 @@
         }
 
         // 页面加载时获取新闻
-        document.addEventListener('DOMContentLoaded', fetchNews);
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchNews();
+            updateDateTime();
+            setInterval(updateDateTime, 60000); // 每分钟更新一次时间
+        });
+
+        // 更新日期和时间显示
+        function updateDateTime() {
+            const now = new Date();
+            const dateElement = document.getElementById('current-date');
+            const timeElement = document.getElementById('current-time');
+            
+            if (dateElement) {
+                const options = { weekday: 'short', month: 'short', day: 'numeric' };
+                dateElement.textContent = now.toLocaleDateString('en-US', options);
+            }
+            
+            if (timeElement) {
+                timeElement.textContent = now.toLocaleTimeString('en-US', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+            }
+        }
     </script>
 
     <!-- Footer Navigation and Copyright Information -->
@@ -464,26 +653,6 @@
           `<li><a href="javascript:void(0)" onclick="selectSingleCategory('${category.replace(/'/g, "\\'")}')"
             class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">${category}</a></li>`
         ).join('');
-      }
-      
-      // Select single category
-      function selectSingleCategory(category) {
-        // Clear all selected categories
-        selectedCategories.clear();
-        document.querySelectorAll('.category-checkbox').forEach(cb => cb.checked = false);
-        
-        // Select specified category
-        const checkbox = document.querySelector(`input[value="${category}"]`);
-        if (checkbox) {
-          checkbox.checked = true;
-          selectedCategories.add(category);
-        }
-        
-        // Apply filtering
-        filterNews();
-        
-        // Scroll to news list top
-        document.getElementById('news-container').scrollIntoView({ behavior: 'smooth' });
       }
       
       // 在页面加载完成后填充页脚分类
