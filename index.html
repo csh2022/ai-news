@@ -216,14 +216,9 @@
             const categories = [...new Set(allNewsData.map(news => news.category))];
             const categoriesContainer = document.getElementById('categories-display');
             
-            const maxVisible = 10; // 增加到10个可见标签
-            const shouldCollapse = categories.length > maxVisible;
-            const visibleCategories = shouldCollapse ? categories.slice(0, maxVisible) : categories;
-            const hiddenCategories = shouldCollapse ? categories.slice(maxVisible) : [];
-            
             categoriesContainer.innerHTML = `
                 <div class="flex flex-nowrap items-center gap-2 md:gap-3 mb-4 overflow-x-auto scrollbar-hide">
-                    ${visibleCategories.map(category => `
+                    ${categories.map(category => `
                         <label class="inline-flex items-center cursor-pointer shrink-0">
                             <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
                                     onchange="toggleCategory('${category.replace(/'/g, "\\'")}')">
@@ -233,73 +228,27 @@
                             </span>
                         </label>
                     `).join('')}
-                    
-                    ${shouldCollapse ? `
-                        <div id="hidden-categories" class="hidden flex-nowrap items-center gap-2 md:gap-3 shrink-0">
-                            ${hiddenCategories.map(category => `
-                                <label class="inline-flex items-center cursor-pointer shrink-0">
-                                    <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
-                                            onchange="toggleCategory('${category.replace(/'/g, "\\'")}')">
-                                    <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-[#4a5568] 
-                                            peer-checked:bg-[#1a365d] peer-checked:text-white transition-colors duration-200 whitespace-nowrap">
-                                        ${category}
-                                    </span>
-                                </label>
-                            `).join('')}
-                        </div>
-                        
-                        <button id="toggle-categories" class="flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-indigo-50 text-[#1a365d] border border-indigo-100 hover:bg-indigo-100 hover:border-indigo-200 shadow-sm hover:shadow transition-all duration-200 min-w-[60px] shrink-0" aria-expanded="false" aria-controls="hidden-categories">
-                            <span class="toggle-icon">+</span>
-                            <span>${hiddenCategories.length} more</span>
-                        </button>
-                    ` : ''}
                 </div>
             `;
-            
-            // 添加折叠/展开功能
-            if (shouldCollapse) {
-                const toggleBtn = document.getElementById('toggle-categories');
-                const hiddenContainer = document.getElementById('hidden-categories');
-                const toggleIcon = toggleBtn.querySelector('.toggle-icon');
-                let isExpanded = false;
-                
-                toggleBtn.addEventListener('click', () => {
-                    isExpanded = !isExpanded;
-                    if (isExpanded) {
-                        hiddenContainer.classList.remove('hidden');
-                        hiddenContainer.classList.add('flex');
-                        toggleBtn.innerHTML = `
-                            <span class="toggle-icon">−</span>
-                            <span>Show less</span>
-                        `;
-                        toggleBtn.classList.add('bg-indigo-100', 'border-indigo-200');
-                        toggleBtn.setAttribute('aria-expanded', 'true');
-                    } else {
-                        hiddenContainer.classList.remove('flex');
-                        hiddenContainer.classList.add('hidden');
-                        toggleBtn.innerHTML = `
-                            <span class="toggle-icon">+</span>
-                            <span>${hiddenCategories.length} more</span>
-                        `;
-                        toggleBtn.classList.remove('bg-indigo-100', 'border-indigo-200');
-                        toggleBtn.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            }
         }
 
         let selectedCategories = new Set();
         
         // 切换分类选择
         function toggleCategory(category) {
-            const checkbox = document.querySelector(`input[value="${category}"]`);
-            
-            if (checkbox.checked) {
-                selectedCategories.add(category);
-            } else {
-                selectedCategories.delete(category);
+            const checkbox = document.querySelector(`input.category-checkbox[value="${category}"]`);
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                filterNews();
             }
-            
+        }
+
+        // 选择单个分类
+        function selectSingleCategory(category) {
+            // 取消所有其他分类的选择
+            document.querySelectorAll('.category-checkbox').forEach(cb => {
+                cb.checked = cb.value === category;
+            });
             filterNews();
         }
         
