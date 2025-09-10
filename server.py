@@ -2,20 +2,28 @@
 import http.server
 import socketserver
 import os
+import time
 
 # 使用18080端口（与Dockerfile中暴露的端口一致）
 PORT = 18080
 
 class MyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
-        # 添加CORS头，允许跨域访问
+        # 设置CORS头
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        # 添加缓存控制头，防止浏览器缓存静态文件
-        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
-        self.send_header('Pragma', 'no-cache')
-        self.send_header('Expires', '0')
+        
+        # 根据文件类型设置不同的缓存控制策略
+        if self.path.endswith('.xml') or self.path == '/robots.txt':
+            # 对于sitemap.xml和robots.txt设置较短的缓存时间，确保搜索引擎能获取最新版本
+            self.send_header('Cache-Control', 'public, max-age=86400')
+            self.send_header('Expires', self.date_time_string(time.time() + 86400))
+        else:
+            # 对于其他静态文件，防止缓存
+            self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
         super().end_headers()
 
 # 切换到项目根目录

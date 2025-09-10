@@ -1,0 +1,30 @@
+# AI News Website Robots.txt
+User-agent: *
+Allow: /
+
+# Restricted directories
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+
+# Allow major search engines to crawl all content
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: Yisouspider
+Allow: /
+
+# Crawl rate control
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: http://example.com/sitemap.xml

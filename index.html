@@ -4,46 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- 基础SEO元标签 -->
-    <title>AI Insights Daily - Latest AI News and Technology Updates</title>
+    <!-- Basic SEO Meta Tags -->
+    <title>AI Insights Daily - Latest Artificial Intelligence News and Technology Updates</title>
     <meta name="description"
-      content="Stay updated with the latest AI news, technology breakthroughs, and insights. Daily curated AI news from trusted sources worldwide.">
+      content="AI Insights Daily provides the latest artificial intelligence news, technological breakthroughs, and deep insights. Daily curated AI updates from trusted global sources covering machine learning, deep learning, neural networks, and other cutting-edge technologies.">
     <meta name="keywords"
-      content="AI news, artificial intelligence, machine learning, technology news, AI updates, AI insights">
+      content="AI news, artificial intelligence, machine learning, deep learning, neural networks, large language models, AI technology, tech updates, AI research, AI applications">
     <meta name="author" content="GroupAI">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title"
-      content="AI Insights Daily - Latest AI News and Technology Updates">
+      content="AI Insights Daily - Latest Artificial Intelligence News and Technology Updates">
     <meta property="og:description"
-      content="Stay updated with the latest AI news, technology breakthroughs, and insights.">
+      content="AI Insights Daily provides the latest artificial intelligence news, technological breakthroughs, and deep insights from trusted global sources.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aiinsightsdaily.com">
     <meta property="og:image"
       content="https://aiinsightsdaily.com/assets/images/og-image.jpg">
     <meta property="og:site_name" content="AI Insights Daily">
+    <meta property="og:locale" content="en_US">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AI Insights Daily - Latest AI News">
+    <meta name="twitter:title" content="AI Insights Daily - Latest Artificial Intelligence News and Technology Updates">
     <meta name="twitter:description"
-      content="Daily curated AI news and technology insights">
+      content="Daily curated AI news and technology insights covering machine learning, deep learning, neural networks, and other cutting-edge technologies">
     <meta name="twitter:image"
       content="https://aiinsightsdaily.com/assets/images/twitter-image.jpg">
+    <meta name="twitter:site" content="@AIInsightsDaily">
 
     <!-- Favicon -->
     <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
 
-    <!-- 结构化数据 (JSON-LD) -->
+    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "AI Insights Daily",
         "url": "https://aiinsightsdaily.com",
-        "description": "Daily curated AI news and technology insights",
+        "description": "AI Insights Daily provides the latest artificial intelligence news, technological breakthroughs, and deep insights",
+        "inLanguage": "en-US",
         "potentialAction": {
             "@type": "SearchAction",
             "target": "https://aiinsightsdaily.com?search={search_term_string}",
@@ -58,11 +63,37 @@
         "@type": "NewsMediaOrganization",
         "name": "AI Insights Daily",
         "url": "https://aiinsightsdaily.com",
-        "logo": "https://aiinsightsdaily.com/assets/images/logo.png",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://aiinsightsdaily.com/assets/images/logo.png",
+            "width": "180",
+            "height": "60"
+        },
         "sameAs": [
             "https://twitter.com/aiinsightsdaily",
-            "https://linkedin.com/company/aiinsightsdaily"
-        ]
+            "https://linkedin.com/company/aiinsightsdaily",
+            "https://www.facebook.com/aiinsightsdaily",
+            "https://www.youtube.com/c/aiinsightsdaily"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "email": "contact@aiinsightsdaily.com",
+            "availableLanguage": "English"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://aiinsightsdaily.com"
+        }]
     }
     </script>
 
@@ -131,14 +162,15 @@
           class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-6 md:py-8">
           <div
             class="layout-content-container flex flex-col w-full max-w-[960px] flex-1">
-            <h1
-              class="text-[#111618] tracking-light text-2xl md:text-3xl lg:text-[36px] font-bold leading-tight px-2 md:px-4 text-left pb-6 md:pb-8 pt-8 md:pt-12">AI
-              Insights Daily</h1>
+            <div class="text-center bg-gradient-to-r from-blue-100 via-sky-50 to-indigo-100 rounded-xl py-8 md:py-10 px-4 md:px-8 mb-6 md:mb-8 shadow-sm border border-blue-100">
+              <h1 class="text-[#1a365d] tracking-tight text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-4">AI Insights Daily</h1>
+              <p class="text-[#4a5568] text-base md:text-lg max-w-2xl mx-auto">Your daily source for artificial intelligence news, breakthroughs, and industry insights</p>
+            </div>
 
-            <!-- 分类显示 -->
+            <!-- Category Display -->
             <div id="categories-display"
               class="flex flex-wrap gap-2 md:gap-3 px-2 md:px-4 pb-6 md:pb-8">
-              <!-- 分类将通过JavaScript动态生成 -->
+              <!-- Categories will be dynamically generated through JavaScript -->
             </div>
 
             <!-- 新闻内容容器 -->
@@ -184,8 +216,8 @@
                         <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
                                     onchange="toggleCategory('${category.replace(/'/g, "\\'")}')">
-                            <span class="px-3 py-1 rounded-full text-sm font-medium bg-[#f0f3f5] text-[#607c8a] 
-                                    peer-checked:bg-[#007bff] peer-checked:text-white transition-colors duration-200">
+                            <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-[#4a5568] 
+                                    peer-checked:bg-[#1a365d] peer-checked:text-white transition-colors duration-200">
                                 ${category}
                             </span>
                         </label>
@@ -197,15 +229,15 @@
                                 <label class="inline-flex items-center cursor-pointer">
                                     <input type="checkbox" value="${category}" class="category-checkbox sr-only peer" 
                                             onchange="toggleCategory('${category.replace(/'/g, "\\'")}')">
-                                    <span class="px-3 py-1 rounded-full text-sm font-medium bg-[#f0f3f5] text-[#607c8a] 
-                                            peer-checked:bg-[#007bff] peer-checked:text-white transition-colors duration-200">
+                                    <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-[#4a5568] 
+                                            peer-checked:bg-[#1a365d] peer-checked:text-white transition-colors duration-200">
                                         ${category}
                                     </span>
                                 </label>
                             `).join('')}
                         </div>
                         
-                        <button id="toggle-categories" class="flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 hover:border-blue-300 shadow-sm hover:shadow transition-all duration-200 min-w-[60px]" aria-expanded="false" aria-controls="hidden-categories">
+                        <button id="toggle-categories" class="flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-indigo-50 text-[#1a365d] border border-indigo-100 hover:bg-indigo-100 hover:border-indigo-200 shadow-sm hover:shadow transition-all duration-200 min-w-[60px]" aria-expanded="false" aria-controls="hidden-categories">
                             <span class="toggle-icon">+</span>
                             <span>${hiddenCategories.length} more</span>
                         </button>
@@ -229,7 +261,7 @@
                             <span class="toggle-icon">−</span>
                             <span>Show less</span>
                         `;
-                        toggleBtn.classList.add('bg-blue-100', 'border-blue-300');
+                        toggleBtn.classList.add('bg-indigo-100', 'border-indigo-200');
                         toggleBtn.setAttribute('aria-expanded', 'true');
                     } else {
                         hiddenContainer.classList.remove('flex');
@@ -238,7 +270,7 @@
                             <span class="toggle-icon">+</span>
                             <span>${hiddenCategories.length} more</span>
                         `;
-                        toggleBtn.classList.remove('bg-blue-100', 'border-blue-300');
+                        toggleBtn.classList.remove('bg-indigo-100', 'border-indigo-200');
                         toggleBtn.setAttribute('aria-expanded', 'false');
                     }
                 });
@@ -314,11 +346,57 @@
         
             if (newsData.length === 0) {
                 newsContainer.innerHTML =
-                    '<p class="text-center text-[#607c8a] p-12 text-lg">No related news found</p>';
+                    '<p class="text-center text-[#607c8a] p-12 text-lg">No relevant news found</p>';
                 return;
             }
+            
+            // 清除之前的文章结构化数据
+            document.querySelectorAll('script[data-type="news-article"]').forEach(script => script.remove());
+            
+            // 创建新的结构化数据容器
+            const structuredDataContainer = document.createElement('div');
+            structuredDataContainer.id = 'structured-data-container';
+            structuredDataContainer.style.display = 'none';
+            document.body.appendChild(structuredDataContainer);
         
-            newsData.forEach(news => {
+            newsData.forEach((news, index) => {
+                // Create structured data for the article
+                const articleStructuredData = {
+                    "@context": "https://schema.org",
+                    "@type": "NewsArticle",
+                    "headline": news.title,
+                    "description": news.summary,
+                    "image": news.image,
+                    "datePublished": news.publishedAt || new Date().toISOString(),
+                    "author": news.author ? {
+                        "@type": "Person",
+                        "name": news.author
+                    } : undefined,
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": news.source || "AI Insights Daily",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "https://aiinsightsdaily.com/assets/images/logo.png",
+                            "width": "180",
+                            "height": "60"
+                        }
+                    },
+                    "mainEntityOfPage": {
+                        "@type": "WebPage",
+                        "@id": news.articleLink
+                    },
+                    "articleSection": news.category
+                };
+                
+                // 添加结构化数据到页面
+                const script = document.createElement('script');
+                script.type = 'application/ld+json';
+                script.dataset.type = 'news-article';
+                script.textContent = JSON.stringify(articleStructuredData);
+                structuredDataContainer.appendChild(script);
+                
+                // 创建新闻卡片HTML
                 const newsCard = `
                     <div class="p-4 md:p-6 bg-gray-50 rounded-xl md:rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
                         <!-- 整体容器：桌面端强制 items-stretch -->
@@ -351,7 +429,7 @@
                             <!-- 右边图片区域 -->
                             <div class="w-full md:w-[200px] flex-shrink-0 relative overflow-hidden rounded-lg md:rounded-xl border border-gray-200 h-[140px] md:h-auto">
                                 <img src="${news.image}" 
-                                    alt="${news.title} - AI news image" 
+                                    alt="${news.title} - AI新闻图片" 
                                     loading="lazy"
                                     class="absolute inset-0 w-full h-full object-cover"
                                     onerror="this.onerror=null;this.src='assets/images/default.png';"
@@ -369,12 +447,105 @@
         document.addEventListener('DOMContentLoaded', fetchNews);
     </script>
 
-    <!-- 底部版权信息 -->
+    <!-- Footer Navigation and Copyright Information -->
     <footer
-      class="mt-8 md:mt-16 py-4 md:py-6 bg-gray-50 border-t border-gray-200">
-      <div class="text-center text-[#607c8a] text-xs md:text-sm">
-        <p>© 2025 GroupAI. All rights reserved.</p>
+      class="mt-8 md:mt-16 py-8 md:py-12 bg-gray-50 border-t border-gray-200">
+      <div class="container mx-auto px-4 md:px-10">
+        <!-- Footer Navigation -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <!-- About Us -->
+          <div>
+            <h3 class="text-[#111618] font-bold text-lg mb-4">About Us</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">About AI Insights Daily</a></li>
+              <li><a href="#" class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">Our Team</a></li>
+              <li><a href="#" class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">Contact Us</a></li>
+              <li><a href="#" class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">Join Us</a></li>
+            </ul>
+          </div>
+          
+          <!-- Popular Categories -->
+          <div>
+            <h3 class="text-[#111618] font-bold text-lg mb-4">Popular Categories</h3>
+            <ul class="space-y-2" id="footer-categories">
+              <!-- Will be dynamically populated through JavaScript -->
+            </ul>
+          </div>
+          
+          <!-- Follow Us -->
+          <div>
+            <h3 class="text-[#111618] font-bold text-lg mb-4">Follow Us</h3>
+            <div class="flex space-x-4">
+              <a href="#" aria-label="Twitter" class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"></path></svg>
+              </a>
+              <a href="#" aria-label="LinkedIn" class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path></svg>
+              </a>
+              <a href="#" aria-label="Facebook" class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"></path></svg>
+              </a>
+              <a href="#" aria-label="YouTube" class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Copyright Information -->
+        <div class="border-t border-gray-200 pt-6 text-center text-[#607c8a] text-xs md:text-sm">
+          <p>© 2025 GroupAI. All rights reserved.</p>
+          <div class="mt-2 flex justify-center space-x-4">
+            <a href="#" class="hover:text-[#007bff] transition-colors duration-200">Privacy Policy</a>
+            <a href="#" class="hover:text-[#007bff] transition-colors duration-200">Terms of Use</a>
+            <a href="#" class="hover:text-[#007bff] transition-colors duration-200">Cookie Policy</a>
+          </div>
+        </div>
       </div>
     </footer>
+    
+    <script>
+      // Populate footer categories
+      function populateFooterCategories() {
+        const footerCategories = document.getElementById('footer-categories');
+        if (!footerCategories) return;
+        
+        // Get first 5 categories
+        const categories = [...new Set(allNewsData.map(news => news.category))].slice(0, 5);
+        
+        // Fill HTML
+        footerCategories.innerHTML = categories.map(category => 
+          `<li><a href="javascript:void(0)" onclick="selectSingleCategory('${category.replace(/'/g, "\\'")}')"
+            class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">${category}</a></li>`
+        ).join('');
+      }
+      
+      // Select single category
+      function selectSingleCategory(category) {
+        // Clear all selected categories
+        selectedCategories.clear();
+        document.querySelectorAll('.category-checkbox').forEach(cb => cb.checked = false);
+        
+        // Select specified category
+        const checkbox = document.querySelector(`input[value="${category}"]`);
+        if (checkbox) {
+          checkbox.checked = true;
+          selectedCategories.add(category);
+        }
+        
+        // Apply filtering
+        filterNews();
+        
+        // Scroll to news list top
+        document.getElementById('news-container').scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      // 在页面加载完成后填充页脚分类
+      document.addEventListener('DOMContentLoaded', function() {
+        fetchNews().then(() => {
+          populateFooterCategories();
+        });
+      });
+    </script>
   </body>
 </html>
