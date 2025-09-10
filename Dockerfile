@@ -30,8 +30,13 @@ WORKDIR /app
 # 从构建阶段复制可执行文件和所有源代码
 COPY --from=builder /app/main .
 COPY --from=builder /app/index.html .
+COPY --from=builder /app/about.html .
+COPY --from=builder /app/privacy.html .
+COPY --from=builder /app/terms.html .
 COPY --from=builder /app/server.py .
 COPY --from=builder /app/ads.txt .
+COPY --from=builder /app/robots.txt .
+COPY --from=builder /app/sitemap.xml .
 COPY --from=builder /app/assets/images ./assets/images
 
 # 复制MySQL初始化脚本
