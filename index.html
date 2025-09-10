@@ -605,11 +605,21 @@
         // Get first 5 categories
         const categories = [...new Set(allNewsData.map(news => news.category))].slice(0, 5);
         
-        // Fill HTML
+        // Fill HTML with scroll to top functionality
         footerCategories.innerHTML = categories.map(category => 
-          `<li><a href="javascript:void(0)" onclick="selectSingleCategory('${category.replace(/'/g, "\\'")}')"
+          `<li><a href="javascript:void(0)" onclick="selectSingleCategoryAndScroll('${category.replace(/'/g, "\\'")}')"
             class="text-[#607c8a] hover:text-[#007bff] transition-colors duration-200">${category}</a></li>`
         ).join('');
+      }
+      
+      // Select category and scroll to top
+      function selectSingleCategoryAndScroll(category) {
+        selectSingleCategory(category);
+        // Smooth scroll to top
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       }
       
       // 在页面加载完成后填充页脚分类
