@@ -160,32 +160,11 @@
           
             <!-- Navigation Menu -->
             <nav class="hidden md:flex items-center gap-6 lg:gap-8">
-              <a href="/" class="text-[#4a5568] hover:text-[#1a365d] font-medium text-sm transition-colors duration-200">
-                Home
-              </a>
-              <a href="/about.html" class="text-[#4a5568] hover:text-[#1a365d] font-medium text-sm transition-colors duration-200">
-                About
-              </a>
-              <a href="/privacy.html" class="text-[#4a5568] hover:text-[#1a365d] font-medium text-sm transition-colors duration-200">
-                Privacy
-              </a>
-              <a href="/terms.html" class="text-[#4a5568] hover:text-[#1a365d] font-medium text-sm transition-colors duration-200">
-                Terms
-              </a>
+              <!-- Navigation links removed -->
             </nav>
           
-            <!-- Right Section: Date, Search, Profile -->
+            <!-- Right Section: Search, Profile -->
             <div class="flex items-center gap-4 md:gap-6">
-              <!-- Current Date -->
-              <div class="hidden lg:flex flex-col items-end">
-                <span class="text-[#718096] text-xs font-medium">
-                  <span id="current-date"></span>
-                </span>
-                <span class="text-[#4a5568] text-xs">
-                  <span id="current-time"></span>
-                </span>
-              </div>
-          
               <!-- Search Bar -->
               <div class="relative">
                 <div class="flex items-center bg-gray-50 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors duration-200">
@@ -571,29 +550,7 @@
         // 页面加载时获取新闻
         document.addEventListener('DOMContentLoaded', function() {
             fetchNews();
-            updateDateTime();
-            setInterval(updateDateTime, 60000); // 每分钟更新一次时间
         });
-
-        // 更新日期和时间显示
-        function updateDateTime() {
-            const now = new Date();
-            const dateElement = document.getElementById('current-date');
-            const timeElement = document.getElementById('current-time');
-            
-            if (dateElement) {
-                const options = { weekday: 'short', month: 'short', day: 'numeric' };
-                dateElement.textContent = now.toLocaleDateString('en-US', options);
-            }
-            
-            if (timeElement) {
-                timeElement.textContent = now.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    hour12: true 
-                });
-            }
-        }
     </script>
 
     <!-- Footer Navigation and Copyright Information -->
