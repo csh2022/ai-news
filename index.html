@@ -141,20 +141,17 @@
             <!-- Logo and Brand -->
             <div class="flex items-center gap-3 md:gap-6">
               <!-- Logo -->
-              <div class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-md">
-                <svg class="w-6 h-6 md:w-7 md:h-7 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-md">
+                <svg class="w-4 h-4 md:w-5 md:h-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
               
-              <!-- Brand Name and Tagline -->
-              <div class="flex flex-col">
-                <h1 class="text-[#1a365d] text-xl md:text-2xl font-bold leading-tight tracking-tight">
-                  AI Insights Daily
+              <!-- Brand Name -->
+              <div class="flex items-center">
+                <h1 class="text-[#1a365d] text-lg md:text-xl font-bold leading-tight tracking-tight">
+                  AI News
                 </h1>
-                <p class="text-[#718096] text-xs md:text-sm font-medium leading-none hidden md:block">
-                  Your AI News Companion
-                </p>
               </div>
             </div>
           
@@ -193,7 +190,7 @@
             class="layout-content-container flex flex-col w-full max-w-[960px] flex-1">
             <div class="text-center bg-gradient-to-r from-blue-100 via-sky-50 to-indigo-100 rounded-xl py-8 md:py-10 px-4 md:px-8 mb-6 md:mb-8 shadow-sm border border-blue-100">
               <h1 class="text-[#1a365d] tracking-tight text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-4">AI Insights Daily</h1>
-              <p class="text-[#4a5568] text-base md:text-lg max-w-2xl mx-auto">Your daily source for artificial intelligence news, breakthroughs, and industry insights</p>
+              <p id="typing-subtitle" class="text-[#4a5568] text-base md:text-lg max-w-2xl mx-auto"></p>
             </div>
 
             <!-- Category Display -->
@@ -547,8 +544,34 @@
             });
         }
 
-        // 页面加载时获取新闻
+        // 打字机效果函数
+        function typeWriter(element, text, speed, callback) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            
+            type();
+        }
+
+        // 页面加载时获取新闻并启动打字机效果
         document.addEventListener('DOMContentLoaded', function() {
+            // 启动打字机效果（仅副标题）
+            const subtitleElement = document.getElementById('typing-subtitle');
+            
+            if (subtitleElement) {
+                 // 直接开始副标题动画
+                 typeWriter(subtitleElement, 'Your daily source for artificial intelligence news, breakthroughs, and industry insights', 10);
+             }
+            
             fetchNews();
         });
     </script>
